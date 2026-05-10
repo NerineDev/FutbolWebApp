@@ -63,8 +63,8 @@ Object oZoomEquipo is a cWebView
                     Set psLabel to "Liga"
                     Set pbPromptButton to True
 
-// ToDo: Fill in the from-child parent Select view object name for navigate forward
-//                    WebRegisterPath ntNavigateForward oSelectView
+
+                    WebRegisterPath ntNavigateForward oSelectLiga
 
                     Procedure OnPrompt
                         Send NavigatePath
@@ -77,14 +77,14 @@ Object oZoomEquipo is a cWebView
                     Set piColumnIndex to 6
                     Set peLabelPosition to lpTop
                     Set psLabel to "Pais"
-                    Set pbPromptButton to True
+                    // Set pbPromptButton to True
         
         // ToDo: Fill in the from-child parent Select view object name for navigate forward
         //                    WebRegisterPath ntNavigateForward oSelectView
         
-                    Procedure OnPrompt
-                        Send NavigatePath
-                    End_Procedure
+                    // Procedure OnPrompt
+                        // Send NavigatePath
+                    // End_Procedure
                 End_Object 
             End_Object 
         End_Object 

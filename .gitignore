@@ -1,27 +1,28 @@
+Programs/WebApp.exe
+Programs/*.log
+Programs/*.dbg
 
-/Programs/WebApp.exe
-/Programs/*.log
+Data/*.dat
+Data/*.hdr
+Data/*.tag
+Data/*.int
+Data/*.k1
+Data/*.k2
+Data/*.k3
+Data/*.x64.cch
+Data/*.log
+Data/*.ini
 
+AppSrc/*.x64.dep
+AppSrc/*.x64.prn
 
-/Data/*.dat
-/Data/*.hdr
-/Data/*.tag
-/Data/*.int
-/Data/*.k1
-/Data/*.k2
-/Data/*.k3
-/Data/*.x64.cch
-/Data/*.log
-/Data/*.ini
-
-
-/AppSrc/*.x64.dep
-/AppSrc/*.x64.prn
-
-
-/IdeSrc/*.dsk
-/IdeSrc/*.mtd
+IdeSrc/*.dsk
+IdeSrc/*.mtd
 *.sws
 
+AppSrc/LoginEncryptionKey.inc
 
-/AppSrc/LoginEncryptionKey.inc
+AppHtml/CssThemes/purple.zip
+AppHtml/CssThemes/Df_Material - Copy/
+
+Config.ws

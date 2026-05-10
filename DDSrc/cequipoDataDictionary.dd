@@ -13,6 +13,8 @@ Class cequipoDataDictionary is a DataDictionary
 
         Set Add_Server_File to liga.File_Number
 
+        Set ParentNullAllowed liga.File_Number to True
+
         Set Add_Client_File to entrenador.File_Number
         Set Add_Client_File to jugador.File_Number
 
