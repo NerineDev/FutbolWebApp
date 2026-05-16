@@ -10,8 +10,13 @@ Use cWebForm.pkg
 Use cWebTabContainer.pkg
 Use cWebTabPage.pkg
 Use cWebButton.pkg
+// Use cWebList.pkg
+// Use cWebColumn.pkg
+// Use cWebColumnButton.pkg
+// Use cequipoDataDictionary.dd
 Use cligaDataDictionary.dd
 Use SelectEquipo.wo
+// Use ZoomEquipo.wo
 
 Object oZoomLiga is a cWebView
     Set piColumnCount to 12
@@ -24,6 +29,10 @@ Object oZoomLiga is a cWebView
 
     Object oliga_DD is a cligaDataDictionary
     End_Object 
+    
+    // Object oequipo_DD is a cequipoDataDictionary
+    //    Set DDO_Server to oliga_DD
+    // End_Object
 
     Set Main_DD To oliga_DD
     Set Server  To oliga_DD
@@ -76,18 +85,58 @@ Object oZoomLiga is a cWebView
                     Set peLabelPosition to lpTop
                 End_Object
                 
-                Object oVerEquiposBtn is a cWebButton
-                    Set psCaption to "Ver equipos de esta liga"
-                    Set piColumnSpan to 4
-                    Set piColumnIndex to 0
+                // Object oEquiposList is a cWebList
+                //    Set Server to oequipo_DD
+                //    Set piColumnSpan to 12
+                //    Set piColumnIndex to 0
+                //    Set pbFillHeight to True
+                //    Set pbShowHeader to True
+                //    Set piHeight to 300
 
-                    WebRegisterPath ntNavigateForward oSelectEquipo
+                   // Object oequipoNombre is a cWebColumn
+                   //     Entry_Item equipo.Nombre
+                   //     Set psCaption to "Equipo"
+                   //     Set piWidth to 500
+                   // End_Object
 
-                    Procedure OnClick
-                        Send NavigatePath
-                    End_Procedure
+                   // Object oequipoLiga is a cWebColumn
+                   //     Entry_Item liga.Nombre
+                   //     Set psCaption to "Liga"
+                   //     Set piWidth to 500
+                   // End_Object
+
+                   // Object oDetailButton is a cWebColumnButton
+                    //    Set psCaption to "btn"
+                    //    Set piWidth to 45
+                    //    Set pbFixedWidth to True
+                    //    Set pbResizable to False
+                    //    Set psBtnCssClass to "WebButtonIcon WebIcon_Info"
+                    //    Set peAlign to alignRight
+
+                    //    WebRegisterPath ntNavigateForward oZoomEquipo
+
+                    //    Procedure OnClick
+                    //        Send NavigatePath
+                    //    End_Procedure
+
+                    //    Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                    //      Move True to NavigateData.bReadOnly
+                    //   End_Procedure
+                    // End_Object
+                    Object oVerEquiposBtn is a cWebButton
+                        Set psCaption to "Ver equipos de esta liga"
+                        Set piColumnSpan to 4
+                        Set piColumnIndex to 0
+
+                        WebRegisterPath ntNavigateForward oSelectEquipo
+
+                        Procedure OnClick
+                            Send NavigatePath
+                        End_Procedure
+                    End_Object
                 End_Object
-            End_Object 
+
+            
         End_Object 
     End_Object 
 
