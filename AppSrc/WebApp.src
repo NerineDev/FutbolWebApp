@@ -1,6 +1,7 @@
 ﻿Use AllWebAppClasses.pkg
 Use cConnection.pkg
 Use cWebMenuItem.pkg
+Use cWebButton.pkg
 
 Object oApplication is a cApplication
     Object oConnection is a cConnection
@@ -164,6 +165,16 @@ Object oWebApp is a cWebApp
             Set peRegion to prRight
             Set piColumnCount to 1
             Set piWidth to 120
+
+            Object oHomeButton is a cWebButton
+                Set piColumnSpan to 0
+                Set psCaption to "Volver al inicio"
+                WebRegisterPath ntNavigateBegin oDashboard
+            
+                Procedure OnClick
+                    Send NavigatePath
+                End_Procedure
+            End_Object
 
             Object oMainActions is a cWebActionBar
                 Set psGroupName to "MainActions"
