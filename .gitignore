@@ -26,3 +26,6 @@ AppHtml/CssThemes/purple.zip
 AppHtml/CssThemes/Df_Material - Copy/
 
 Config.ws
+*.cfg
+AppSrc/WebApp.x64.dep
+AppSrc/WebApp.x64.prn
