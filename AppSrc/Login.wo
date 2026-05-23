@@ -37,7 +37,7 @@ Object oLogin is a cWebView
     
     Object oLogo is a cWebImage
         Set piColumnSpan to 10
-        Set psUrl to "images/DF_Logo_Retina.png"
+        Set psUrl to "Images/app-logo.png"
         Set pePosition to wiFit
         Set piColumnIndex to 1
         Set piHeight to 160

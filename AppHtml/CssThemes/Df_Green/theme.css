@@ -5377,4 +5377,55 @@ border-width: 0px 1px 1px 1px;*/
     filter: saturate(1.08);
 }
 
+/* Keep zoom/select form text readable on the stadium background. */
+.WebInlineView .WebControl > div.WebCon_TopLabel > label,
+.WebInlineView div.WebCon_TopLabel.WebCon_FloatEnabled > label.WebCon_Float{
+    color: rgba(245, 251, 247, 0.86) !important;
+}
+
+.WebInlineView .WebForm input,
+.WebInlineView .WebForm .WebDynFrm,
+.WebInlineView .WebCombo input{
+    color: #f5fbf7 !important;
+}
+
+.WebInlineView .WebControl .WebFrm_Wrapper{
+    border-color: rgba(245, 251, 247, 0.58) !important;
+}
+
+.WebInlineView .WebControl.Web_Enabled.WebCon_Focus > div > div > .WebFrm_Wrapper,
+.WebInlineView .WebControl.Web_Enabled.WebCon_Focus div > div > div.WebFrm_Wrapper{
+    border-color: #a7f3c8 !important;
+}
+
+.WebInlineView .WebGroup .WebControl > div.WebCon_TopLabel > label,
+.WebInlineView .WebGroup div.WebCon_TopLabel.WebCon_FloatEnabled > label.WebCon_Float{
+    color: #42524c !important;
+}
+
+.WebInlineView .WebGroup .WebForm input,
+.WebInlineView .WebGroup .WebForm .WebDynFrm,
+.WebInlineView .WebGroup .WebCombo input{
+    color: #181818 !important;
+}
+
+.WebInlineView .WebGroup .WebControl .WebFrm_Wrapper{
+    border-color: #bababa !important;
+}
+
+.WebInlineView .WebGroup .WebControl.Web_Enabled.WebCon_Focus > div > div > .WebFrm_Wrapper,
+.WebInlineView .WebGroup .WebControl.Web_Enabled.WebCon_Focus div > div > div.WebFrm_Wrapper{
+    border-color: #57977d !important;
+}
+
+.LoginView .WebForm input,
+.LoginView .WebForm .WebDynFrm{
+    color: #181818 !important;
+}
+
+.LoginView .WebForm input::placeholder{
+    color: #788680 !important;
+    opacity: 1;
+}
+
 
