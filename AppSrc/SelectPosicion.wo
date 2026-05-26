@@ -31,7 +31,8 @@ Object oSelectPosicion is a cWebView
         Set piColumnSpan to 0
         Set psCSSClass to "MobileList"
         Set pbServerOnRowClick to True
-        Set pbFillHeight to True
+        Set pbFillHeight to False
+        Set pbScroll to False
         Set pbShowHeader to False
         Set piSortColumn to 0
 

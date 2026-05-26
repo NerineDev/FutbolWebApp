@@ -7,12 +7,15 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
+Use cWebCombo.pkg
 Use cWebTabContainer.pkg
 Use cWebTabPage.pkg
+Use SQL.pkg
 
 Use cligaDataDictionary.dd
 Use cequipoDataDictionary.dd
 Use cjugadorDataDictionary.dd
+Use cposicionDataDictionary.dd
 
 
 Object oZoomJugador is a cWebView
@@ -35,6 +38,9 @@ Object oZoomJugador is a cWebView
         Set DDO_Server to oequipo_DD
     End_Object 
 
+    Object oSQLHandleManager is a cSQLHandleManager
+    End_Object
+
     Set Main_DD to ojugador_DD
     Set Server  to ojugador_DD
 
@@ -45,7 +51,7 @@ Object oZoomJugador is a cWebView
         Object ojugadorNombre is a cWebForm
             Entry_Item jugador.Nombre
             Set piColumnSpan to 4
-            Set piColumnIndex to 0
+            Set piColumnIndex to 1
             Set peLabelPosition to lpTop
             Set psLabel to "Nombre"
         End_Object 
@@ -53,7 +59,7 @@ Object oZoomJugador is a cWebView
         Object ojugadorApellido is a cWebForm
             Entry_Item jugador.Apellido
             Set piColumnSpan to 4
-            Set piColumnIndex to 5
+            Set piColumnIndex to 7
             Set peLabelPosition to lpTop
             Set psLabel to "Apellido"
         End_Object 
@@ -61,10 +67,52 @@ Object oZoomJugador is a cWebView
 
         Object ojugadorNacionalidad is a cWebForm
             Entry_Item jugador.Nacionalidad
-            Set piColumnSpan to 3
-            Set piColumnIndex to 0
+            Set piColumnSpan to 4
+            Set piColumnIndex to 1
             Set peLabelPosition to lpTop
             Set psLabel to "Nacionalidad"
+        End_Object 
+
+        Object oPosicionDisplay is a cWebForm
+            Set piColumnSpan to 4
+            Set piColumnIndex to 7
+            Set peLabelPosition to lpTop
+            Set psLabel to "Posición"
+            Set pbEnabled to False
+        End_Object 
+
+        Object oPosicionCombo is a cWebCombo
+            Set piColumnSpan to 4
+            Set piColumnIndex to 7
+            Set peLabelPosition to lpTop
+            Set psLabel to "Posición"
+            Set pbAddEmptyItem to True
+
+            Procedure OnFill
+                Handle hoConnection hoStatement
+                Integer iFetchResult
+                String sId sNombre
+
+                Get SQLFileConnect of oSQLHandleManager posicion.File_Number to hoConnection
+                If (hoConnection <> 0) Begin
+                    Get SQLOpen of hoConnection to hoStatement
+                    If (hoStatement <> 0) Begin
+                        Send SQLExecDirect of hoStatement "select ID, Nombre from posicion order by Nombre"
+
+                        Repeat
+                            Get SQLFetch of hoStatement to iFetchResult
+                            If (iFetchResult <> 0) Begin
+                                Get SQLColumnValue of hoStatement 1 to sId
+                                Get SQLColumnValue of hoStatement 2 to sNombre
+                                Send AddComboItem sId sNombre
+                            End
+                        Until (iFetchResult = 0)
+
+                        Send SQLClose to hoStatement
+                    End
+                    Send SQLDisconnect to hoConnection
+                End
+            End_Procedure
         End_Object 
 
         Object oWebTabContainer is a cWebTabContainer
@@ -140,7 +188,19 @@ Object oZoomJugador is a cWebView
             Set psCaption to "Save"
 
             Procedure OnClick
-                Send Request_Save
+                Boolean bShouldSave bHasRecord
+
+                Get Should_Save of ojugador_DD to bShouldSave
+                If (bShouldSave) Begin
+                    Send Request_Save
+                End
+                Else Begin
+                    Get HasRecord of ojugador_DD to bHasRecord
+                    If (bHasRecord) Begin
+                        Send SaveJugadorPosicion
+                        Send NavigateClose Self
+                    End
+                End
             End_Procedure
 
         End_Object 
@@ -194,15 +254,161 @@ Object oZoomJugador is a cWebView
 
         If (NavigateData.bReadOnly) Begin
             WebSet pbRender of oEditBtn to True
+            WebSet pbRender of oPosicionDisplay to True
+            WebSet pbRender of oPosicionCombo to False
         End
         Else Begin
             WebSet pbRender of oSaveBtn to True
             WebSet pbRender of oCancelChangesBtn to True
             WebSet pbRender of oDeleteBtn to bHasRecord
+            WebSet pbRender of oPosicionDisplay to False
+            WebSet pbRender of oPosicionCombo to True
         End
     End_Procedure
 
+    Function FirstJugadorPosicionId Integer iJugadorId Returns String
+        Handle hoConnection hoStatement
+        Integer iFetchResult
+        String sJugadorPosicionId sSQL
+
+        If (iJugadorId = 0) Begin
+            Function_Return ""
+        End
+
+        Move ("select ID from jugadorposicion where JugadorID = " + String(iJugadorId) + " order by ID limit 1") to sSQL
+
+        Get SQLFileConnect of oSQLHandleManager jugadorposicion.File_Number to hoConnection
+        If (hoConnection <> 0) Begin
+            Get SQLOpen of hoConnection to hoStatement
+            If (hoStatement <> 0) Begin
+                Send SQLExecDirect of hoStatement sSQL
+                Get SQLFetch of hoStatement to iFetchResult
+                If (iFetchResult <> 0) Begin
+                    Get SQLColumnValue of hoStatement 1 to sJugadorPosicionId
+                End
+                Send SQLClose to hoStatement
+            End
+            Send SQLDisconnect to hoConnection
+        End
+
+        Function_Return sJugadorPosicionId
+    End_Function
+
+    Function CurrentJugadorPosicionId Integer iJugadorId Returns String
+        Handle hoConnection hoStatement
+        Integer iFetchResult
+        String sPosicionId sSQL
+
+        If (iJugadorId = 0) Begin
+            Function_Return ""
+        End
+
+        Move ("select PosicionID from jugadorposicion where JugadorID = " + String(iJugadorId) + " order by ID limit 1") to sSQL
+
+        Get SQLFileConnect of oSQLHandleManager jugadorposicion.File_Number to hoConnection
+        If (hoConnection <> 0) Begin
+            Get SQLOpen of hoConnection to hoStatement
+            If (hoStatement <> 0) Begin
+                Send SQLExecDirect of hoStatement sSQL
+                Get SQLFetch of hoStatement to iFetchResult
+                If (iFetchResult <> 0) Begin
+                    Get SQLColumnValue of hoStatement 1 to sPosicionId
+                End
+                Send SQLClose to hoStatement
+            End
+            Send SQLDisconnect to hoConnection
+        End
+
+        Function_Return sPosicionId
+    End_Function
+
+    Function CurrentJugadorPosicionNombre Integer iJugadorId Returns String
+        Handle hoConnection hoStatement
+        Integer iFetchResult
+        String sPosicionNombre sSQL
+
+        If (iJugadorId = 0) Begin
+            Function_Return ""
+        End
+
+        Move ("select p.Nombre from jugadorposicion jp inner join posicion p on p.ID = jp.PosicionID where jp.JugadorID = " + String(iJugadorId) + " order by jp.ID limit 1") to sSQL
+
+        Get SQLFileConnect of oSQLHandleManager jugadorposicion.File_Number to hoConnection
+        If (hoConnection <> 0) Begin
+            Get SQLOpen of hoConnection to hoStatement
+            If (hoStatement <> 0) Begin
+                Send SQLExecDirect of hoStatement sSQL
+                Get SQLFetch of hoStatement to iFetchResult
+                If (iFetchResult <> 0) Begin
+                    Get SQLColumnValue of hoStatement 1 to sPosicionNombre
+                End
+                Send SQLClose to hoStatement
+            End
+            Send SQLDisconnect to hoConnection
+        End
+
+        Function_Return sPosicionNombre
+    End_Function
+
+    Procedure SQLExecNoResult String sSQL Integer iFileNumber
+        Handle hoConnection hoStatement
+
+        Get SQLFileConnect of oSQLHandleManager iFileNumber to hoConnection
+        If (hoConnection <> 0) Begin
+            Get SQLOpen of hoConnection to hoStatement
+            If (hoStatement <> 0) Begin
+                Send SQLExecDirect of hoStatement sSQL
+                Send SQLClose to hoStatement
+            End
+            Send SQLDisconnect to hoConnection
+        End
+    End_Procedure
+
+    Procedure LoadJugadorPosicion
+        Integer iJugadorId
+        String sPosicionId sPosicionNombre
+
+        Move jugador.ID to iJugadorId
+        Get CurrentJugadorPosicionId iJugadorId to sPosicionId
+        Get CurrentJugadorPosicionNombre iJugadorId to sPosicionNombre
+        WebSet psValue of oPosicionCombo to sPosicionId
+        WebSet psValue of oPosicionDisplay to sPosicionNombre
+    End_Procedure
+
+    Procedure SaveJugadorPosicion
+        Integer iJugadorId iPosicionId
+        String sPosicionId sJugadorPosicionId sSQL
+
+        Move jugador.ID to iJugadorId
+        If (iJugadorId = 0) Begin
+            Procedure_Return
+        End
+
+        WebGet psValue of oPosicionCombo to sPosicionId
+        Get FirstJugadorPosicionId iJugadorId to sJugadorPosicionId
+
+        If (Trim(sPosicionId) = "") Begin
+            If (Trim(sJugadorPosicionId) <> "") Begin
+                Move ("delete from jugadorposicion where ID = " + sJugadorPosicionId) to sSQL
+                Send SQLExecNoResult sSQL jugadorposicion.File_Number
+            End
+            Procedure_Return
+        End
+
+        Move sPosicionId to iPosicionId
+
+        If (Trim(sJugadorPosicionId) <> "") Begin
+            Move ("update jugadorposicion set PosicionID = " + String(iPosicionId) + " where ID = " + sJugadorPosicionId) to sSQL
+        End
+        Else Begin
+            Move ("insert into jugadorposicion (JugadorID, PosicionID) values (" + String(iJugadorId) + ", " + String(iPosicionId) + ")") to sSQL
+        End
+
+        Send SQLExecNoResult sSQL jugadorposicion.File_Number
+    End_Procedure
+
     Procedure OnViewSaved Handle hoServer Boolean bChanged
+        Send SaveJugadorPosicion
         // Close after save
         Send NavigateClose Self
     End_Procedure
@@ -231,6 +437,7 @@ Object oZoomJugador is a cWebView
         Case End
 
         Send SetActionButtons
+        Send LoadJugadorPosicion
 
     End_Procedure
 

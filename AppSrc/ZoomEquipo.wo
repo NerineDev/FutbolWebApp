@@ -7,11 +7,16 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
+Use cWebButton.pkg
 Use cWebTabContainer.pkg
 Use cWebTabPage.pkg
+Use cWebHtmlBox.pkg
+Use SQL.pkg
 
 Use cligaDataDictionary.dd
 Use cequipoDataDictionary.dd
+Use cjugadorDataDictionary.dd
+Use centrenadorDataDictionary.dd
 
 Object oZoomEquipo is a cWebView
     Set piColumnCount to 12
@@ -29,9 +34,66 @@ Object oZoomEquipo is a cWebView
         Set DDO_Server To oliga_DD
     End_Object 
 
+    Object oSQLHandleManager is a cSQLHandleManager
+    End_Object
+
     Set Main_DD To oequipo_DD
     Set Server  To oequipo_DD
 
+    Function RelatedListHtml String sKind Integer iEquipoId Returns String
+        Handle hoConnection hoStatement
+        Integer iFetchResult iRows
+        String sNombre sApellido sSQL sTitle sTable sHtml
+
+        If (sKind = "J") Begin
+            Move "Jugadores de este equipo" to sTitle
+            Move "jugador" to sTable
+        End
+        Else Begin
+            Move "Entrenador de este equipo" to sTitle
+            Move "entrenador" to sTable
+        End
+
+        Move ('<div class="TeamInlineList"><h3>' + sTitle + '</h3><table><thead><tr><th>Nombre</th><th>Apellido</th></tr></thead><tbody>') to sHtml
+
+        If (iEquipoId <> 0) Begin
+            Move ("select Nombre, Apellido from " + sTable + " where EquipoID = " + String(iEquipoId) + " order by Nombre, Apellido") to sSQL
+
+            If (sKind = "J") Begin
+                Get SQLFileConnect of oSQLHandleManager jugador.File_Number to hoConnection
+            End
+            Else Begin
+                Get SQLFileConnect of oSQLHandleManager entrenador.File_Number to hoConnection
+            End
+
+            If (hoConnection <> 0) Begin
+                Get SQLOpen of hoConnection to hoStatement
+                If (hoStatement <> 0) Begin
+                    Send SQLExecDirect of hoStatement sSQL
+
+                    Repeat
+                        Get SQLFetch of hoStatement to iFetchResult
+                        If (iFetchResult <> 0) Begin
+                            Get SQLColumnValue of hoStatement 1 to sNombre
+                            Get SQLColumnValue of hoStatement 2 to sApellido
+                            Move (sHtml + '<tr><td>' + sNombre + '</td><td>' + sApellido + '</td></tr>') to sHtml
+                            Increment iRows
+                        End
+                    Until (iFetchResult = 0)
+
+                    Send SQLClose to hoStatement
+                End
+                Send SQLDisconnect to hoConnection
+            End
+        End
+
+        If (iRows = 0) Begin
+            Move (sHtml + '<tr><td colspan="2" class="TeamInlineEmpty">Sin registros.</td></tr>') to sHtml
+        End
+
+        Move (sHtml + '</tbody></table></div>') to sHtml
+        Function_Return sHtml
+    End_Function
 
     Object oWebMainPanel is a cWebPanel
         Set piColumnCount to 12
@@ -44,6 +106,38 @@ Object oZoomEquipo is a cWebView
             Set peLabelPosition to lpTop
             Set psLabel to "Equipo"
         End_Object 
+
+        Object oJugadoresButton is a cWebButton
+            Set psCaption to "Jugadores"
+            Set piColumnSpan to 2
+            Set piColumnIndex to 8
+
+            Procedure OnClick
+                Integer iEquipoId
+                String sHtml
+
+                Move equipo.ID to iEquipoId
+                Get RelatedListHtml "J" iEquipoId to sHtml
+                Send UpdateHTML of oRelatedBox sHtml
+                WebSet pbRender of oRelatedBox to True
+            End_Procedure
+        End_Object
+
+        Object oEntrenadorButton is a cWebButton
+            Set psCaption to "Entrenador"
+            Set piColumnSpan to 2
+            Set piColumnIndex to 10
+
+            Procedure OnClick
+                Integer iEquipoId
+                String sHtml
+
+                Move equipo.ID to iEquipoId
+                Get RelatedListHtml "E" iEquipoId to sHtml
+                Send UpdateHTML of oRelatedBox sHtml
+                WebSet pbRender of oRelatedBox to True
+            End_Procedure
+        End_Object
 
         Object oWebTabContainer is a cWebTabContainer
             Set pbFillHeight to True
@@ -86,6 +180,14 @@ Object oZoomEquipo is a cWebView
                         // Send NavigatePath
                     // End_Procedure
                 End_Object 
+
+                Object oRelatedBox is a cWebHtmlBox
+                    Set piColumnSpan to 12
+                    Set piColumnIndex to 0
+                    Set pbRender to False
+                    Set psHtml to ""
+                End_Object
+
             End_Object 
         End_Object 
     End_Object 

@@ -5398,6 +5398,17 @@ border-width: 0px 1px 1px 1px;*/
     border-color: #a7f3c8 !important;
 }
 
+.WebInlineView .WebControl.Web_Enabled .WebFrm_Wrapper input,
+.WebInlineView .WebControl.Web_Enabled .WebFrm_Wrapper select,
+.WebInlineView .WebControl.Web_Enabled .WebDynFrm{
+    color: #10201a !important;
+}
+
+.WebInlineView .WebControl.Web_Enabled .WebFrm_Wrapper input::placeholder{
+    color: #65746d !important;
+    opacity: 1;
+}
+
 .WebInlineView .WebGroup .WebControl > div.WebCon_TopLabel > label,
 .WebInlineView .WebGroup div.WebCon_TopLabel.WebCon_FloatEnabled > label.WebCon_Float{
     color: #42524c !important;
@@ -5418,6 +5429,159 @@ border-width: 0px 1px 1px 1px;*/
     border-color: #57977d !important;
 }
 
+.WebInlineView .WebTabContainer .WebControl > div.WebCon_TopLabel > label,
+.WebInlineView .WebTabContainer div.WebCon_TopLabel.WebCon_FloatEnabled > label.WebCon_Float{
+    color: #42524c !important;
+}
+
+.WebInlineView .WebTabContainer .WebForm input,
+.WebInlineView .WebTabContainer .WebForm .WebDynFrm,
+.WebInlineView .WebTabContainer .WebCombo input{
+    color: #181818 !important;
+}
+
+.WebInlineView .WebTabContainer .WebControl .WebFrm_Wrapper{
+    border-color: #bababa !important;
+}
+
+.WebInlineView .WebTabContainer .WebControl.Web_Enabled.WebCon_Focus > div > div > .WebFrm_Wrapper,
+.WebInlineView .WebTabContainer .WebControl.Web_Enabled.WebCon_Focus div > div > div.WebFrm_Wrapper{
+    border-color: #57977d !important;
+}
+
+.WebInlineView .WebTbc_Body .WebControl > div.WebCon_TopLabel > label,
+.WebInlineView .WebTbc_Body div.WebCon_TopLabel.WebCon_FloatEnabled > label.WebCon_Float,
+.WebInlineView .WebCC_Body .WebControl > div.WebCon_TopLabel > label,
+.WebInlineView .WebCC_Body div.WebCon_TopLabel.WebCon_FloatEnabled > label.WebCon_Float,
+.WebInlineView .WebCard .WebControl > div.WebCon_TopLabel > label,
+.WebInlineView .WebCard div.WebCon_TopLabel.WebCon_FloatEnabled > label.WebCon_Float{
+    color: #42524c !important;
+}
+
+.WebInlineView .WebTbc_Body .WebForm input,
+.WebInlineView .WebTbc_Body .WebForm .WebDynFrm,
+.WebInlineView .WebTbc_Body .WebCombo input,
+.WebInlineView .WebCC_Body .WebForm input,
+.WebInlineView .WebCC_Body .WebForm .WebDynFrm,
+.WebInlineView .WebCC_Body .WebCombo input,
+.WebInlineView .WebCard .WebForm input,
+.WebInlineView .WebCard .WebForm .WebDynFrm,
+.WebInlineView .WebCard .WebCombo input{
+    color: #181818 !important;
+}
+
+.WebInlineView .WebTbc_Body .WebControl .WebFrm_Wrapper,
+.WebInlineView .WebCC_Body .WebControl .WebFrm_Wrapper,
+.WebInlineView .WebCard .WebControl .WebFrm_Wrapper{
+    border-color: #bababa !important;
+}
+
+.WebInlineView .WebTbc_Body .WebControl.Web_Enabled.WebCon_Focus > div > div > .WebFrm_Wrapper,
+.WebInlineView .WebTbc_Body .WebControl.Web_Enabled.WebCon_Focus div > div > div.WebFrm_Wrapper,
+.WebInlineView .WebCC_Body .WebControl.Web_Enabled.WebCon_Focus > div > div > .WebFrm_Wrapper,
+.WebInlineView .WebCC_Body .WebControl.Web_Enabled.WebCon_Focus div > div > div.WebFrm_Wrapper,
+.WebInlineView .WebCard .WebControl.Web_Enabled.WebCon_Focus > div > div > .WebFrm_Wrapper,
+.WebInlineView .WebCard .WebControl.Web_Enabled.WebCon_Focus div > div > div.WebFrm_Wrapper{
+    border-color: #57977d !important;
+}
+
+.WebInlineView .WebTabContainer,
+.WebInlineView .WebCard,
+.WebInlineView .WebList,
+.WebInlineView .WebGrid{
+    background:
+        linear-gradient(180deg, rgba(248, 253, 250, 0.94), rgba(235, 247, 241, 0.88)) !important;
+    border: 1px solid rgba(214, 229, 221, 0.7) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 18px 42px rgba(5, 20, 15, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.62) !important;
+}
+
+.WebInlineView .WebTbc_Body{
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.WebInlineView .WebTbc_Head{
+    background:
+        linear-gradient(180deg, rgba(250, 254, 252, 0.96), rgba(235, 247, 241, 0.92)) !important;
+    border-bottom-color: rgba(35, 127, 91, 0.24) !important;
+}
+
+.WebInlineView .WebList .WebList_Body,
+.WebInlineView .WebGrid .WebList_Body{
+    background-color: transparent !important;
+}
+
+.WebInlineView .WebList,
+.WebInlineView .WebGrid,
+.WebInlineView .WebList .WebList_Body,
+.WebInlineView .WebGrid .WebList_Body,
+.WebInlineView .WebList .WebList_Row,
+.WebInlineView .WebGrid .WebList_Row,
+.WebInlineView .WebList .WebList_Row td,
+.WebInlineView .WebGrid .WebList_Row td,
+.WebInlineView .WebList .WebList_Cell,
+.WebInlineView .WebGrid .WebList_Cell,
+.WebInlineView .WebList .WebList_Col,
+.WebInlineView .WebGrid .WebList_Col,
+.WebInlineView .RowCaption,
+.WebInlineView .RowDetail{
+    color: #181818 !important;
+}
+
+.WebInlineView .WebList .WebList_Head,
+.WebInlineView .WebGrid .WebList_Head,
+.WebInlineView .WebList .WebList_ColCap,
+.WebInlineView .WebGrid .WebList_ColCap{
+    color: #42524c !important;
+}
+
+.WebInlineView .WebList .WebList_Row.WebList_Selected,
+.WebInlineView .WebGrid .WebList_Row.WebList_Selected{
+    color: #0B1F18 !important;
+    background-color: rgba(41, 126, 92, 0.18) !important;
+}
+
+.WebInlineView .WebList > div,
+.WebInlineView .WebGrid > div,
+.WebInlineView .WebList > div > div,
+.WebInlineView .WebGrid > div > div,
+.WebInlineView .WebList > div > div > div,
+.WebInlineView .WebGrid > div > div > div,
+.WebInlineView .WebList > div > div > div > div,
+.WebInlineView .WebGrid > div > div > div > div{
+    background-color: transparent !important;
+}
+
+.WebInlineView .WebList .WebList_Row,
+.WebInlineView .WebGrid .WebList_Row{
+    background-color: rgba(248, 253, 250, 0.42) !important;
+    border-bottom-color: rgba(38, 93, 70, 0.12) !important;
+}
+
+.WebInlineView .WebList .WebList_Row:nth-child(even),
+.WebInlineView .WebGrid .WebList_Row:nth-child(even){
+    background-color: rgba(231, 244, 237, 0.46) !important;
+}
+
+.WebInlineView .WebList .WebList_Row:hover,
+.WebInlineView .WebGrid .WebList_Row:hover{
+    background-color: rgba(191, 224, 208, 0.58) !important;
+}
+
+.WebInlineView .WebList .WebList_Row.WebList_Selected,
+.WebInlineView .WebGrid .WebList_Row.WebList_Selected,
+.WebGrid > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected,
+.WebList > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected{
+    background-color: rgba(143, 199, 174, 0.48) !important;
+}
+
+.WebInlineView .WebList .WebList_Row td,
+.WebInlineView .WebGrid .WebList_Row td{
+    border-bottom-color: rgba(38, 93, 70, 0.12) !important;
+}
+
 .LoginView .WebForm input,
 .LoginView .WebForm .WebDynFrm{
     color: #181818 !important;
@@ -5426,6 +5590,309 @@ border-width: 0px 1px 1px 1px;*/
 .LoginView .WebForm input::placeholder{
     color: #788680 !important;
     opacity: 1;
+}
+
+/* Softer glass surfaces for stadium views. */
+.WebInlineView .WebTabContainer,
+.WebInlineView .WebCard{
+    background: rgba(238, 249, 243, 0.72) !important;
+    border: 1px solid rgba(231, 244, 237, 0.48) !important;
+    border-radius: 5px !important;
+    box-shadow: 0 16px 40px rgba(4, 14, 11, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(7px);
+}
+
+.WebInlineView .WebTbc_Head{
+    background: rgba(242, 252, 247, 0.48) !important;
+    border-bottom-color: rgba(35, 127, 91, 0.18) !important;
+}
+
+.WebInlineView .WebTbc_Body{
+    background: rgba(242, 252, 247, 0.18) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.WebInlineView .WebList,
+.WebInlineView .WebGrid{
+    background: rgba(232, 246, 239, 0.62) !important;
+    border: 1px solid rgba(231, 244, 237, 0.44) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 14px 34px rgba(4, 14, 11, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.42) !important;
+    backdrop-filter: blur(7px);
+}
+
+.WebInlineView .WebList .WebList_Body,
+.WebInlineView .WebGrid .WebList_Body,
+.WebInlineView .WebList > div,
+.WebInlineView .WebGrid > div,
+.WebInlineView .WebList > div > div,
+.WebInlineView .WebGrid > div > div,
+.WebInlineView .WebList > div > div > div,
+.WebInlineView .WebGrid > div > div > div,
+.WebInlineView .WebList > div > div > div > div,
+.WebInlineView .WebGrid > div > div > div > div{
+    background-color: transparent !important;
+}
+
+.WebInlineView .WebList .WebList_Row,
+.WebInlineView .WebGrid .WebList_Row,
+.WebInlineView .WebList .WebList_Row:nth-child(even),
+.WebInlineView .WebGrid .WebList_Row:nth-child(even){
+    background-color: rgba(246, 253, 249, 0.18) !important;
+    border-bottom-color: rgba(22, 82, 59, 0.07) !important;
+}
+
+.WebInlineView .WebList .WebList_Row td,
+.WebInlineView .WebGrid .WebList_Row td{
+    border-bottom-color: rgba(22, 82, 59, 0.07) !important;
+}
+
+.WebInlineView .WebList .WebList_Row:hover,
+.WebInlineView .WebGrid .WebList_Row:hover{
+    background-color: rgba(200, 232, 216, 0.42) !important;
+}
+
+.WebInlineView .WebList .WebList_Row.WebList_Selected,
+.WebInlineView .WebGrid .WebList_Row.WebList_Selected,
+.WebGrid > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected,
+.WebList > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected{
+    background-color: rgba(127, 190, 159, 0.4) !important;
+}
+
+.WebInlineView .MobileList{
+    box-shadow: 0 16px 42px rgba(4, 14, 11, 0.22) !important;
+}
+
+/* Final surface pass: readable, lighter, less spreadsheet-like. */
+.WebInlineView .WebTabContainer,
+.WebInlineView .WebCard{
+    background: rgba(245, 252, 248, 0.58) !important;
+    border: 1px solid rgba(245, 252, 248, 0.34) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 14px 34px rgba(4, 14, 11, 0.17) !important;
+    backdrop-filter: blur(5px);
+}
+
+.WebInlineView .WebTbc_Head{
+    background: rgba(245, 252, 248, 0.28) !important;
+    border-bottom-color: rgba(35, 127, 91, 0.16) !important;
+}
+
+.WebInlineView .WebTbc_Body{
+    background: rgba(245, 252, 248, 0.1) !important;
+}
+
+.WebInlineView .WebList,
+.WebInlineView .WebGrid{
+    background: rgba(245, 252, 248, 0.72) !important;
+    border: 1px solid rgba(245, 252, 248, 0.42) !important;
+    border-radius: 3px !important;
+    box-shadow: 0 12px 30px rgba(4, 14, 11, 0.14) !important;
+    backdrop-filter: blur(4px);
+}
+
+.WebInlineView .WebList .WebList_Row,
+.WebInlineView .WebGrid .WebList_Row,
+.WebInlineView .WebList .WebList_Row:nth-child(even),
+.WebInlineView .WebGrid .WebList_Row:nth-child(even){
+    background-color: transparent !important;
+    border-bottom-color: rgba(22, 82, 59, 0.045) !important;
+}
+
+.WebInlineView .WebList .WebList_Row td,
+.WebInlineView .WebGrid .WebList_Row td{
+    border-bottom-color: rgba(22, 82, 59, 0.045) !important;
+}
+
+.WebInlineView .WebList .WebList_Row:hover,
+.WebInlineView .WebGrid .WebList_Row:hover{
+    background-color: rgba(219, 240, 230, 0.38) !important;
+}
+
+.WebInlineView .WebList .WebList_Row.WebList_Selected,
+.WebInlineView .WebGrid .WebList_Row.WebList_Selected,
+.WebGrid > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected,
+.WebList > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected{
+    background-color: rgba(117, 179, 150, 0.28) !important;
+}
+
+.WebInlineView .MobileList{
+    background: rgba(245, 252, 248, 0.68) !important;
+    box-shadow: 0 14px 34px rgba(4, 14, 11, 0.14) !important;
+}
+
+/* Visual cleanup: lower opacity, fewer lines, more field-over-stadium feel. */
+.WebInlineView .WebTabContainer,
+.WebInlineView .WebCard{
+    background: rgba(245, 252, 248, 0.42) !important;
+    border: 1px solid rgba(245, 252, 248, 0.24) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 12px 28px rgba(4, 14, 11, 0.12) !important;
+    backdrop-filter: blur(4px);
+}
+
+.WebInlineView .WebTbc_Head{
+    background: rgba(245, 252, 248, 0.18) !important;
+    border-bottom: 1px solid rgba(35, 127, 91, 0.12) !important;
+}
+
+.WebInlineView .WebTbc_Body,
+.WebInlineView .WebCC_Body{
+    background: rgba(245, 252, 248, 0.06) !important;
+}
+
+.WebInlineView .WebList,
+.WebInlineView .WebGrid,
+.WebInlineView .MobileList{
+    background: rgba(245, 252, 248, 0.46) !important;
+    border: 1px solid rgba(245, 252, 248, 0.22) !important;
+    border-radius: 3px !important;
+    box-shadow: 0 10px 24px rgba(4, 14, 11, 0.11) !important;
+    backdrop-filter: blur(4px);
+}
+
+.WebInlineView .WebList .WebList_Body,
+.WebInlineView .WebGrid .WebList_Body,
+.WebInlineView .WebList > div,
+.WebInlineView .WebGrid > div,
+.WebInlineView .WebList > div > div,
+.WebInlineView .WebGrid > div > div,
+.WebInlineView .WebList > div > div > div,
+.WebInlineView .WebGrid > div > div > div,
+.WebInlineView .WebList > div > div > div > div,
+.WebInlineView .WebGrid > div > div > div > div{
+    background: transparent !important;
+}
+
+.WebInlineView .WebList .WebList_Row,
+.WebInlineView .WebGrid .WebList_Row,
+.WebInlineView .WebList .WebList_Row:nth-child(even),
+.WebInlineView .WebGrid .WebList_Row:nth-child(even),
+.WebInlineView .WebList .WebList_Row td,
+.WebInlineView .WebGrid .WebList_Row td{
+    background-color: transparent !important;
+    border-bottom-color: rgba(22, 82, 59, 0.025) !important;
+}
+
+.WebInlineView .WebList .WebList_Row:hover,
+.WebInlineView .WebGrid .WebList_Row:hover{
+    background-color: rgba(226, 244, 235, 0.28) !important;
+}
+
+.WebInlineView .WebList .WebList_Row.WebList_Selected,
+.WebInlineView .WebGrid .WebList_Row.WebList_Selected,
+.WebGrid > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected,
+.WebList > div > div > div > div > .WebList_Body.WebList_ShowSelected > .WebList_Row.WebList_Selected{
+    background-color: rgba(117, 179, 150, 0.24) !important;
+}
+
+.WebInlineView .WebList .WebList_Head,
+.WebInlineView .WebGrid .WebList_Head,
+.WebInlineView .WebList .WebList_ColCap,
+.WebInlineView .WebGrid .WebList_ColCap{
+    background: rgba(245, 252, 248, 0.22) !important;
+    border-bottom-color: rgba(22, 82, 59, 0.04) !important;
+}
+
+.WebInlineView .RowCaption,
+.WebInlineView .RowDetail,
+.WebInlineView .WebList .WebList_Cell,
+.WebInlineView .WebGrid .WebList_Cell{
+    color: #10201a !important;
+}
+
+.TeamRelatedPanel{
+    margin-top: 18px;
+    padding: 18px 20px 20px;
+    color: #10201a;
+    background: rgba(245, 252, 248, 0.46);
+    border: 1px solid rgba(245, 252, 248, 0.26);
+    border-radius: 4px;
+    box-shadow: 0 10px 24px rgba(4, 14, 11, 0.12);
+}
+
+.TeamRelatedPanel h3{
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: 0 0 8px;
+    color: #3f9275;
+    border-bottom: 3px solid #0f7a55;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.TeamRelatedPanel table{
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(245, 252, 248, 0.34);
+}
+
+.TeamRelatedPanel th,
+.TeamRelatedPanel td{
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(22, 82, 59, 0.08);
+}
+
+.TeamRelatedPanel th{
+    color: #44554e;
+    font-weight: 500;
+}
+
+.TeamRelatedPanel td{
+    color: #10201a;
+    font-size: 16px;
+}
+
+.TeamRelatedEmpty{
+    color: #44554e;
+    font-style: italic;
+}
+
+.TeamInlineList{
+    margin-top: 18px;
+    color: #10201a;
+    max-width: 720px;
+}
+
+.TeamInlineList h3{
+    margin: 0 0 12px;
+    color: #2f8669;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.TeamInlineList table{
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    background: rgba(245, 252, 248, 0.28);
+}
+
+.TeamInlineList th,
+.TeamInlineList td{
+    width: 50%;
+    padding: 6px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(22, 82, 59, 0.10);
+}
+
+.TeamInlineList th{
+    color: #40544c;
+    font-weight: 500;
+}
+
+.TeamInlineList td{
+    color: #10201a;
+}
+
+.TeamInlineEmpty{
+    color: #44554e;
+    font-style: italic;
 }
 
 
