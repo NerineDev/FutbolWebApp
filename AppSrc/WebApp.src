@@ -201,6 +201,7 @@ Object oWebApp is a cWebApp
     Use Dashboard.wo
     Use ZoomEntrenador.wo
     Use SelectEntrenador.wo
+    Use SelectJugadorPosicion.wo
     Use ZoomJugador.wo
     Use SelectJugador.wo
     Use ZoomPosicion.wo
