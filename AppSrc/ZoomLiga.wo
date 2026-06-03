@@ -7,10 +7,14 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
+Use cWebButton.pkg
+Use cWebLabel.pkg
+Use cWebHtmlBox.pkg
 Use cWebTabContainer.pkg
 Use cWebTabPage.pkg
 Use cWebList.pkg
 Use cWebColumn.pkg
+Use SQL.pkg
 
 Use cligaDataDictionary.dd
 Use cequipoDataDictionary.dd
@@ -23,6 +27,7 @@ Object oZoomLiga is a cWebView
     Set pbShowCaption to False
     Set Verify_Save_Msg to 0
     Set piMaxWidth to 1024
+    Property Boolean pbMostrarEquiposJugadores False
 
     Object oliga_DD is a cligaDataDictionary
     End_Object 
@@ -31,6 +36,73 @@ Object oZoomLiga is a cWebView
         Set DDO_Server to oliga_DD
         Set Constrain_File to liga.File_Number
     End_Object
+
+    Object oSQLHandleManager is a cSQLHandleManager
+    End_Object
+
+    Function FirstEquipoIdForLiga Returns Integer
+        Handle hoConnection hoStatement
+        Integer iEquipoId iFetchResult
+        String sSQL
+
+        If (liga.ID = 0) Function_Return 0
+
+        Move ("select ID from equipo where LigaID = " + String(liga.ID) + " order by ID limit 1") to sSQL
+        Get SQLFileConnect of oSQLHandleManager equipo.File_Number to hoConnection
+        If (hoConnection = 0) Function_Return 0
+
+        Get SQLOpen of hoConnection to hoStatement
+        If (hoStatement <> 0) Begin
+            Send SQLExecDirect of hoStatement sSQL
+            Get SQLFetch of hoStatement to iFetchResult
+            If (iFetchResult <> 0) Begin
+                Get SQLColumnValue of hoStatement 1 to iEquipoId
+            End
+            Send SQLClose to hoStatement
+        End
+
+        Send SQLDisconnect to hoConnection
+        Function_Return iEquipoId
+    End_Function
+
+    Function JugadoresEquipoHtml Integer iEquipoId Returns String
+        Handle hoConnection hoStatement
+        Integer iFetchResult iRows
+        String sNombre sApellido sSQL sHtml
+
+        Move '<div class="TeamInlineList"><table><thead><tr><th><u>Nombre</u></th><th><u>Apellido</u></th></tr></thead><tbody>' to sHtml
+
+        If (iEquipoId <> 0) Begin
+            Move ("select Nombre, Apellido from jugador where EquipoID = " + String(iEquipoId) + " order by Nombre, Apellido") to sSQL
+            Get SQLFileConnect of oSQLHandleManager jugador.File_Number to hoConnection
+            If (hoConnection <> 0) Begin
+                Get SQLOpen of hoConnection to hoStatement
+                If (hoStatement <> 0) Begin
+                    Send SQLExecDirect of hoStatement sSQL
+
+                    Repeat
+                        Get SQLFetch of hoStatement to iFetchResult
+                        If (iFetchResult <> 0) Begin
+                            Get SQLColumnValue of hoStatement 1 to sNombre
+                            Get SQLColumnValue of hoStatement 2 to sApellido
+                            Move (sHtml + '<tr><td>' + sNombre + '</td><td>' + sApellido + '</td></tr>') to sHtml
+                            Increment iRows
+                        End
+                    Until (iFetchResult = 0)
+
+                    Send SQLClose to hoStatement
+                End
+                Send SQLDisconnect to hoConnection
+            End
+        End
+
+        If (iRows = 0) Begin
+            Move (sHtml + '<tr><td colspan="2" class="TeamInlineEmpty">Sin jugadores.</td></tr>') to sHtml
+        End
+
+        Move (sHtml + '</tbody></table></div>') to sHtml
+        Function_Return sHtml
+    End_Function
 
     Set Main_DD to oliga_DD
     Set Server  to oliga_DD
@@ -63,7 +135,7 @@ Object oZoomLiga is a cWebView
 
             Object oPage1 is a cWebTabPage
                 Set piColumnCount to 12
-                Set psCaption to "Equipos"
+                Set psCaption to "Equipos y jugadores"
                 WebSetResponsive piColumnCount rmMobile to 4
 
                 Object oligaEquipos is a cWebForm
@@ -82,6 +154,37 @@ Object oZoomLiga is a cWebView
                     Set piColumnIndex to 4
                     Set peLabelPosition to lpTop
                 End_Object
+
+                Object oEquiposLigaButton is a cWebButton
+                    Set psCaption to "Equipos de la liga"
+                    Set piColumnSpan to 3
+                    Set piColumnIndex to 7
+
+                    Procedure OnClick
+                        RowID riEquipo
+                        Integer iEquipoId
+                        String sHtml
+
+                        Set pbMostrarEquiposJugadores to True
+                        WebSet pbRender of oEquiposList to True
+                        WebSet pbRender of oJugadoresEquipoLabel to True
+                        WebSet pbRender of oJugadoresEquipoBox to True
+                        Send RefreshListFromDD of oEquiposList
+
+                        Get CurrentRowId of oequipo_DD to riEquipo
+                        If (not(IsNullRowID(riEquipo))) Begin
+                            Send ReadByRowId of oequipo_DD equipo.File_Number riEquipo
+                        End
+
+                        Move equipo.ID to iEquipoId
+                        If (iEquipoId = 0) Begin
+                            Get FirstEquipoIdForLiga of oZoomLiga to iEquipoId
+                        End
+
+                        Get JugadoresEquipoHtml of oZoomLiga iEquipoId to sHtml
+                        Send UpdateHtml of oJugadoresEquipoBox sHtml
+                    End_Procedure
+                End_Object
                 
                 Object oEquiposList is a cWebList
                     Set psCaption to "Equipos de esta liga"
@@ -92,11 +195,13 @@ Object oZoomLiga is a cWebView
                     Set pbScroll to False
                     Set piMinHeight to 250
                     Set pbServerOnShow to True
+                    Set pbServerOnRowClick to True
                     Set pbShowHeader to True
+                    Set pbRender to False
                     
                     Procedure OnShow
                         Forward Send OnShow
-                        Send GridRefresh
+                        Send RefreshListFromDD
                     End_Procedure
 
                     Object oequipoNombreCol is a cWebColumn
@@ -104,6 +209,36 @@ Object oZoomLiga is a cWebView
                         Set psCaption to "Equipo"
                         Set piWidth to 500
                     End_Object
+
+                    Procedure OnRowClick String sRowId
+                        RowID riEquipo
+                        Integer iEquipoId
+                        String sHtml
+
+                        Move (DeserializeRowID(sRowId)) to riEquipo
+                        If (not(IsNullRowID(riEquipo))) Begin
+                            Send ReadByRowId of oequipo_DD equipo.File_Number riEquipo
+                        End
+
+                        Move equipo.ID to iEquipoId
+                        Get JugadoresEquipoHtml of oZoomLiga iEquipoId to sHtml
+                        Send UpdateHtml of oJugadoresEquipoBox sHtml
+                    End_Procedure
+                End_Object
+
+                Object oJugadoresEquipoLabel is a cWebLabel
+                    Set psCaption to "Jugadores del equipo"
+                    Set piColumnSpan to 12
+                    Set piColumnIndex to 0
+                    Set pbRender to False
+                    Set psCSSClass to "InlineSectionTitle"
+                End_Object
+
+                Object oJugadoresEquipoBox is a cWebHtmlBox
+                    Set piColumnSpan to 12
+                    Set piColumnIndex to 0
+                    Set pbRender to False
+                    Set psHtml to ""
                 End_Object
             End_Object
     End_Object
@@ -170,11 +305,13 @@ End_Object
     Procedure SetActionButtons
         tWebNavigateData NavigateData
         Boolean bHasRecord
+        Boolean bMostrarEquiposJugadores
         Handle hoDD
 
         Get Server to hoDD
         Get GetNavigateData to NavigateData
         Get HasRecord of hoDD to bHasRecord
+        Get pbMostrarEquiposJugadores to bMostrarEquiposJugadores
 
         // let's hide all buttons and then Show the ones we want
         WebSet pbRender of oEditBtn to False
@@ -182,6 +319,9 @@ End_Object
         WebSet pbRender of oCancelChangesBtn to False
         WebSet pbRender of oDeleteBtn to False
         WebSet pbRender of oBackBtn to True
+        WebSet pbRender of oEquiposList to bMostrarEquiposJugadores
+        WebSet pbRender of oJugadoresEquipoLabel to bMostrarEquiposJugadores
+        WebSet pbRender of oJugadoresEquipoBox to bMostrarEquiposJugadores
 
         If (NavigateData.bReadOnly) Begin
             WebSet pbRender of oEditBtn to True
@@ -204,6 +344,8 @@ End_Object
     End_Procedure
 
     Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
+        String sNombreLiga
+
         Case Begin
             Case (NavigateData.eNavigateType = nfFromMain)
                 // If from main, this is a propbably a main file Select to Zoom.
@@ -221,6 +363,18 @@ End_Object
 
         Case End
 
+        Move (Trim(liga.Nombre)) to sNombreLiga
+        If (sNombreLiga <> "") Begin
+            Send SetBreadcrumbCaption sNombreLiga
+            Send SetHeaderCaption sNombreLiga
+        End
+        Else Begin
+            Send SetBreadcrumbCaption "Liga"
+            Send SetHeaderCaption "Liga"
+        End
+
+        Set pbMostrarEquiposJugadores to False
+        Send UpdateHtml of oJugadoresEquipoBox ""
         Send SetActionButtons
 
     End_Procedure

@@ -285,6 +285,8 @@ Object oZoomEquipo is a cWebView
     End_Procedure
 
     Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
+        String sNombreEquipo
+
         Case Begin
             Case (NavigateData.eNavigateType = nfFromMain)
                 // If from main, this is a propbably a main file Select to Zoom.
@@ -301,6 +303,16 @@ Object oZoomEquipo is a cWebView
             Case Else // must be nfUndefined
 
         Case End
+
+        Move (Trim(equipo.Nombre)) to sNombreEquipo
+        If (sNombreEquipo <> "") Begin
+            Send SetBreadcrumbCaption sNombreEquipo
+            Send SetHeaderCaption sNombreEquipo
+        End
+        Else Begin
+            Send SetBreadcrumbCaption "Equipo"
+            Send SetHeaderCaption "Equipo"
+        End
 
         Send SetActionButtons
 

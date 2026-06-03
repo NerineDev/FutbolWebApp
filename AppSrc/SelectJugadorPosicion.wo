@@ -17,7 +17,7 @@ Use cposicionDataDictionary.dd
 Use cjugadorposicionDataDictionary.dd
 
 Object oSelectJugadorPosicion is a cWebView
-    Set psCaption to "Posiciones del jugador"
+    Set psCaption to "Sus posiciones"
     Set peWebViewStyle to wvsDrilldown
     Set peViewType to vtSelect
     Set piColumnCount to 12
@@ -263,11 +263,12 @@ Object oSelectJugadorPosicion is a cWebView
         String sNombre
 
         Move (Trim(jugador.Nombre + " " + jugador.Apellido)) to sNombre
+        Send SetBreadcrumbCaption "Sus posiciones"
         If (sNombre <> "") Begin
-            WebSet psCaption to ("Posiciones de: " + sNombre)
+            Send SetHeaderCaption ("Posiciones de: " + sNombre)
         End
         Else Begin
-            WebSet psCaption to "Posiciones del jugador"
+            Send SetHeaderCaption "Posiciones del jugador"
         End
 
         Send RefrescarListas
